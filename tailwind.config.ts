@@ -1,5 +1,4 @@
 import type { Config } from "tailwindcss";
-// import "./fonts.css";
 
 const config: Config = {
   content: [
@@ -11,7 +10,6 @@ const config: Config = {
     extend: {
       fontFamily: {
         circular: ['"Circular Std"', "san-serif"],
-        recoleta: ['"Recoleta Alt"'],
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

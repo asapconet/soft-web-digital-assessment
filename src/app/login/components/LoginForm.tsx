@@ -10,6 +10,7 @@ import { LoginSchema } from "../schemas";
 import { useLogin } from "@/api/auth";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { ToastContext } from "@/app/context/ToastContext";
 
 export function LoginForm({ onNextStep }: any) {
   const router = useRouter();
@@ -42,6 +43,7 @@ export function LoginForm({ onNextStep }: any) {
 
   return (
     <>
+      <ToastContext />
       <div className="w-[486px] ">
         <p className="text-light_gray text-[1rem]">Jump right back in</p>
         <p className="text-[3rem] font-[800] text-black font-recoleta mb-8">

@@ -9,6 +9,7 @@ import classNames from "classnames";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React from "react";
+import { ToastContext } from "@/app/context/ToastContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <QueryClientProvider client={queryClient}>
-        
+        <ToastContext />
         <body className={classNames(inter.className)}>
           <Header />
           {children}

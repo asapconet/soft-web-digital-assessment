@@ -14,6 +14,7 @@ import { signUpSchema } from "../schema";
 import { useRegister } from "@/api/auth";
 import { Toaster, toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { ToastContext } from "@/app/context/ToastContext";
 
 type ApiResponse = {
   message: string;
@@ -43,13 +44,15 @@ export function SignupForm() {
 
   useEffect(() => {
     if (data?.status === 200) {
-      toast.success(data?.data.message);
+      toast.success("Registration Successful");
       router.push("/");
       reset();
     } else if (data?.status !== 200) {
       console.error("something went wrong");
     }
   }, [data, reset, router]);
+
+  console.log(data?.data.message, "the success news");
 
   const onSubmitUser = (data: any) => {
     createUser({
@@ -66,6 +69,7 @@ export function SignupForm() {
 
   return (
     <div className="my-[95px] flex justify-center items-center min-h-[70vh]">
+      <Toaster position="top-right" reverseOrder={false} />
       <div className="w-[486px]">
         <p className="text-light_gray text-[1rem]">Sign up for free</p>
         <p className="text-[3rem] font-[800] text-black font-recoleta mb-8">

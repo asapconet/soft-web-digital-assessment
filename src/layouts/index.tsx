@@ -1,11 +1,14 @@
+"use client";
+
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../styles/globals.css";
 import Header from "@/components/Header";
-import Providers from "@/app/Providers";
 import Footer from "@/components/Footer";
-import { ToastContext } from "./context/ToastContext";
-import QueryProvider from "@/Providers/QueryProvider";
+import classNames from "classnames";
+
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import React from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,14 +22,17 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const [queryClient] = React.useState(() => new QueryClient());
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <ToastContext />
-        <Providers>
-          <QueryProvider>{children}</QueryProvider>
-        </Providers>
-      </body>
+      <QueryClientProvider client={queryClient}>
+        
+        <body className={classNames(inter.className)}>
+          <Header />
+          {children}
+          <Footer />
+        </body>
+      </QueryClientProvider>
     </html>
   );
 }

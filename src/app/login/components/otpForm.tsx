@@ -13,7 +13,7 @@ import OtpInput from "react-otp-input";
 import { useVerifyOtp } from "@/api/auth";
 import toast from "react-hot-toast";
 
-export function OtpForm() {
+export function OtpForm({ mailed }: any) {
   const router = useRouter();
   const [otp, setOtp] = useState("");
 
@@ -39,7 +39,8 @@ export function OtpForm() {
   }, [data, reset, router]);
 
   const onSubmit = (data: any) => {
-    verifyEmail(data);
+    verifyEmail({otp});
+    console.log(otp, "otp shhh");
   };
 
   return (
@@ -49,7 +50,7 @@ export function OtpForm() {
           <OtpInput
             value={otp}
             onChange={setOtp}
-            numInputs={4}
+            numInputs={6}
             shouldAutoFocus
             inputStyle="text-primary mx-4 w-[75px] rounded-md h-[75px] bg-input_bg border-[1px] 
              border-input_border text-primary"
@@ -60,8 +61,8 @@ export function OtpForm() {
           />
 
           <p className="text-light_gray text-[1rem] text-center mb-8">
-            An OTP code has been sent to segunsolaru@gmail.com. Check your email
-            to get the code
+            An OTP code has been sent to {mailed} Check your email to get the
+            code
           </p>
         </div>
         <form className="flex flex-col" onSubmit={handleSubmit(onSubmit)}>

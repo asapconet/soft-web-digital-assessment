@@ -30,7 +30,7 @@ function Login() {
           />
         );
       case 3:
-        return <OtpForm />;
+        return <OtpForm mailed={"yu"} />;
       default:
         return <LoginForm onNextStep={handleNextStep} />;
     }

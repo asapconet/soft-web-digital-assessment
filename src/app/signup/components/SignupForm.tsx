@@ -15,6 +15,7 @@ import { useRegister } from "@/api/auth";
 import { Toaster, toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { ToastContext } from "@/app/context/ToastContext";
+import errorsToRecord from "@hookform/resolvers/io-ts/src/errorsToRecord.js";
 
 type ApiResponse = {
   message: string;
@@ -24,6 +25,7 @@ type ApiResponse = {
 
 export function SignupForm() {
   const [userType, setUserType] = useState("regular");
+
   const router = useRouter();
   const {
     register,
@@ -34,25 +36,21 @@ export function SignupForm() {
     resolver: yupResolver(signUpSchema),
   });
 
-  const { mutate: createUser, data } = useRegister();
+  const { mutate: createUser, data: res } = useRegister();
 
   const handleUserTypeChange = (type: any) => {
     setUserType(type);
   };
 
-  console.log(data);
-
   useEffect(() => {
-    if (data?.status === 200) {
-      toast.success("Registration Successful");
-      router.push("/");
+    if (res?.status === 200) {
+      toast.success(res?.data.message);
+      router.push("/login");
       reset();
-    } else if (data?.status !== 200) {
+    } else if (res?.status !== 200) {
       console.error("something went wrong");
     }
-  }, [data, reset, router]);
-
-  console.log(data?.data.message, "the success news");
+  }, [res, reset, router]);
 
   const onSubmitUser = (data: any) => {
     createUser({
@@ -182,6 +180,7 @@ function UserRegistrationForm({
       <PrimaryInput
         id="password"
         label="Password"
+        type="password"
         register={{ ...register("password") }}
       />
       {errors.password && (
@@ -193,6 +192,7 @@ function UserRegistrationForm({
       <PrimaryInput
         id="confirmPassword"
         label="Re-enter Password"
+        type="password"
         register={{ ...register("confirmPassword") }}
       />
       {errors.confirmPassword && (

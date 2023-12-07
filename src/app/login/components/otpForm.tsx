@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SecondaryButton } from "@/components/Button";
@@ -10,6 +10,8 @@ import { FaArrowCircleLeft } from "react-icons/fa";
 import { otpSchema, resetEmailSchema } from "@/app/forgot-password/schema";
 import { useRouter } from "next/navigation";
 import OtpInput from "react-otp-input";
+import { useVerifyOtp } from "@/api/auth";
+import toast from "react-hot-toast";
 
 export function OtpForm() {
   const router = useRouter();
@@ -18,14 +20,26 @@ export function OtpForm() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(otpSchema),
   });
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
-    router.push("/forgot-password");
+  const { mutate: verifyEmail, data } = useVerifyOtp();
+
+  useEffect(() => {
+    if (data?.status === 200) {
+      toast.success(data?.data.message);
+      router.push("/forgot-password");
+      reset();
+    } else if (data?.status === 400) {
+      console.error("email not verified");
+    }
+  }, [data, reset, router]);
+
+  const onSubmit = (data: any) => {
+    verifyEmail(data);
   };
 
   return (

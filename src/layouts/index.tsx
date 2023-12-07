@@ -27,9 +27,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <QueryClientProvider client={queryClient}>
-        <ToastContext />
         <body className={classNames(inter.className)}>
           <Header />
+          <ToastContext />
           {children}
           <Footer />
         </body>

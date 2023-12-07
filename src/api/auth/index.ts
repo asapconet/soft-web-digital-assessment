@@ -34,6 +34,7 @@ type ApiResponse = {
   token: string;
   data: any;
   error: any;
+  isLoading: boolean;
 };
 
 export const useRegister = () =>
@@ -65,7 +66,7 @@ export const useForgotPasswordEmail = () =>
     mutationFn: (values: ResetPasswordEmail) =>
       request
         .post(`/password/email`, values)
-        .then((res) => res.data)
+        .then((res) => res)
         .catch((err) => err.response.data),
   });
 
@@ -73,7 +74,7 @@ export const useVerifyOtp = () =>
   useMutation<AxiosResponse<any, Error>, Error, verifyOtp>({
     mutationFn: (values: verifyOtp) =>
       request
-        .post(`/password/email`, values)
+        .post(`/email/verify`, values)
         .then((res) => res.data)
         .catch((err) => err.response.data),
   });

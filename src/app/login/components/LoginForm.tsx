@@ -43,7 +43,7 @@ export function LoginForm({ onNextStep }: any) {
 
   return (
     <>
-      <ToastContext />
+      {/* <ToastContext /> */}
       <div className="w-[486px] ">
         <p className="text-light_gray text-[1rem]">Jump right back in</p>
         <p className="text-[3rem] font-[800] text-black font-recoleta mb-8">
@@ -63,6 +63,7 @@ export function LoginForm({ onNextStep }: any) {
           <PrimaryInput
             id="password"
             label="Password"
+            type="password"
             register={{ ...register("password") }}
           />
           <div className="flex justify-between items-center">

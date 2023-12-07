@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SecondaryButton } from "@/components/Button";
@@ -9,9 +9,12 @@ import Link from "next/link";
 import { IoArrowBackCircleOutline } from "react-icons/io5";
 import { resetEmailSchema } from "@/app/forgot-password/schema";
 import { MailBox } from "@/app/assets/mailBox";
+import { useForgotPasswordEmail } from "@/api/auth";
+import toast from "react-hot-toast";
 
 export function ResetPasswordEmailForm({ onNextStep, onPrevStep }: any) {
   const [emailSent, setEmailSent] = useState(false);
+  const [email, setEmail] = useState("");
 
   const {
     register,
@@ -21,17 +24,25 @@ export function ResetPasswordEmailForm({ onNextStep, onPrevStep }: any) {
     resolver: yupResolver(resetEmailSchema),
   });
 
-  const handleNextStep = () => {
-    if (emailSent) {
-      onNextStep();
+  const { mutate: sendEmail, data: response } = useForgotPasswordEmail();
+
+  useEffect(() => {
+    if (response?.status === 200) {
+      toast.success(response.data.message);
+      setEmailSent(true);
     } else {
+      setEmailSent(false);
       console.error("Email not sent yet");
     }
+  }, [response]);
+
+  const handleNextStep = () => {
+    onNextStep();
   };
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log("Simulating email sending:", data.email);
-    setEmailSent(true);
+  const onSubmit = (data: any) => {
+    sendEmail(data);
+    setEmail(data.email);
   };
 
   return (
@@ -43,8 +54,8 @@ export function ResetPasswordEmailForm({ onNextStep, onPrevStep }: any) {
               <MailBox />
             </div>
             <p className="text-light_gray text-center text-[1rem] mb-8">
-              An OTP code has been sent to segunsolaru@gmail.com. Check your
-              email to get the code
+              An OTP code has been sent to {email} Check your email to get the
+              code
             </p>
           </div>
           <>

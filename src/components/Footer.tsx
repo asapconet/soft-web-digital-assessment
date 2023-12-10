@@ -49,6 +49,13 @@ const footData: LProps[] = [
     titleLinks: [{ name: "Dutiful jobs", link: "#" }],
   },
 ];
+
+const FooterLink = ({ link, children }: any) => (
+  <Link href={link}>
+    <a>{children}</a>
+  </Link>
+);
+
 const Footer = () => {
   const year = new Date().getFullYear();
   return (
@@ -70,7 +77,7 @@ const Footer = () => {
                     key={linkIdx}
                     className="text-secondary_text font-[450] text-[1rem]"
                   >
-                    {link.name}
+                    <FooterLink link={link.link}>{link.name}</FooterLink>
                   </li>
                 ))}
               </ul>

@@ -32,7 +32,7 @@ export function ResetPasswordEmailForm({ onNextStep, onPrevStep }: any) {
       setEmailSent(true);
     } else {
       setEmailSent(false);
-      console.error("Email not sent yet");
+      console.error("Email not sent yet"); // to be replaced with pending BE response msg
     }
   }, [response]);
 

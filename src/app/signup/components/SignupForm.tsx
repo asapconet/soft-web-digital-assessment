@@ -48,7 +48,7 @@ export function SignupForm() {
       router.push("/login");
       reset();
     } else if (res?.status !== 200) {
-      console.error("something went wrong");
+      console.error("something went wrong"); // to be replaced with pending BE response msg
     }
   }, [res, reset, router]);
 
@@ -62,7 +62,7 @@ export function SignupForm() {
   };
 
   const onSubmitProvider: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
+    return data;
   };
 
   return (

@@ -7,12 +7,9 @@ import calender from "../app/assets/images/Calendar.png";
 import { IoMdStar } from "react-icons/io";
 import { Avater } from "./assets/Avater";
 
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-
 function Home() {
   return (
     <RootLayout>
-
       <main>
         <div className="text-6xl min-h-[70vh] mt-[96px]">
           <div className="grid grid-cols-2 gap-1 w-full min-h-[634px]">

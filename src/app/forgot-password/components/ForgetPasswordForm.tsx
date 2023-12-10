@@ -19,7 +19,7 @@ export function ResetPasswordForm() {
   });
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
+    return data;
   };
 
   return (

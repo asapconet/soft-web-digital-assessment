@@ -32,11 +32,10 @@ export function LoginForm({ onNextStep }: any) {
       router.push("/");
       reset();
     } else if (data?.status === 400) {
-      console.error("something went wrong");
+      console.error("something went wrong"); // to be replaced with pending BE response msg
     }
   }, [data, reset, router]);
 
-  console.log(data);
   const onSubmit = (data: any) => {
     loginUser(data);
   };

@@ -34,13 +34,12 @@ export function OtpForm({ mailed }: any) {
       router.push("/forgot-password");
       reset();
     } else if (data?.status === 400) {
-      console.error("email not verified");
+      console.error("email not verified"); // to be replaced with pending BE response msg
     }
   }, [data, reset, router]);
 
   const onSubmit = (data: any) => {
-    verifyEmail({otp});
-    console.log(otp, "otp shhh");
+    verifyEmail({ otp });
   };
 
   return (
